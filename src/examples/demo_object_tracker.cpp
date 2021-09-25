@@ -34,5 +34,5 @@ int main(int argc, char* argv[])
 {
     // import flow
         // config_str
-    // start what the demo does
+    // start what the demo does.
 }
