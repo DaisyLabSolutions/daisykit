@@ -71,5 +71,6 @@
   },
   "C_Cpp.clang_format_style": "{BasedOnStyle: Google, PointerAlignment: Left, IncludeBlocks: Preserve, DerivePointerAlignment: false}",
   "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true
+  "files.trimFinalNewlines": true,
+  "ros.distro": "noetic"
 }
