@@ -29,8 +29,8 @@ namespace nodes {
 class BinarizeNode : public Node {
  public:
   using Node::Node;  // For constructor inheritance
-  void Process(std::shared_ptr<Packet> in_packet,
-               std::shared_ptr<Packet>& out_packet) {
+  void Process(PacketPtr in_packet,
+               PacketPtr& out_packet) {
     // Convert packet to processing format: cv::Mat
     cv::Mat img = *in_packet->GetData<cv::Mat>();
 
@@ -50,15 +50,16 @@ class BinarizeNode : public Node {
     WaitForData();
 
     // Prepare input packets
-    std::map<std::string, PacketPtr> inputs;
+    PacketMap inputs;
     PrepareInputs(inputs);
 
     PacketPtr input = inputs["input"];
     PacketPtr output;
     Process(input, output);
 
-    std::map<std::string, PacketPtr> outputs;
-    outputs.insert(std::make_pair("output", output));
+    PacketMap outputs;
+    outputs["output"] = output;
+
     Publish(outputs);
   }
 };

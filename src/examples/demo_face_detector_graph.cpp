@@ -90,7 +90,7 @@ int main(int, char**) {
     Mat frame;
     cap >> frame;
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
-    std::shared_ptr<Packet> in_packet = Packet::MakePacket<cv::Mat>(frame);
+    PacketPtr in_packet = Packet::MakePacket<cv::Mat>(frame);
     packet_distributor_node->Input("input", in_packet);
   }
 

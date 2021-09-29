@@ -92,7 +92,7 @@ void Node::WaitForData() {
 std::string Node::GetNodeName() { return node_name_; }
 NodeType Node::GetNodeType() { return node_type_; }
 
-void Node::PrepareInputs(std::map<std::string, PacketPtr>& input_map) {
+void Node::PrepareInputs(PacketMap& input_map) {
   for (auto const& conn : in_connections_) {
     PacketPtr packet;
     if (conn->RequireDataOnTick()) {
@@ -107,7 +107,7 @@ void Node::PrepareInputs(std::map<std::string, PacketPtr>& input_map) {
   }
 }
 
-void Node::Publish(const std::map<std::string, PacketPtr>& outputs) {
+void Node::Publish(const PacketMap& outputs) {
   for (auto const& conn : out_connections_) {
     std::string input_name = conn->GetPrevOutputName();
     for (auto const& output : outputs) {

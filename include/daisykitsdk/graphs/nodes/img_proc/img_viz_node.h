@@ -34,7 +34,7 @@ class ImgVizNode : public Node {
     WaitForData();
 
     // Prepare input packets
-    std::map<std::string, PacketPtr> inputs;
+    PacketMap inputs;
     PrepareInputs(inputs);
 
     if (inputs.count("binary") > 0) {

@@ -47,15 +47,15 @@ class GrayScaleNode : public Node {
     WaitForData();
 
     // Prepare input packets
-    std::map<std::string, PacketPtr> inputs;
+    PacketMap inputs;
     PrepareInputs(inputs);
 
     PacketPtr input = inputs["input"];
     PacketPtr output;
     Process(input, output);
 
-    std::map<std::string, PacketPtr> outputs;
-    outputs.insert(std::make_pair("output", output));
+    PacketMap outputs;
+    outputs["output"] = output;
 
     Publish(outputs);
   }

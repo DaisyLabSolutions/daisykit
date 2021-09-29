@@ -20,11 +20,18 @@
 #include <atomic>
 #include <chrono>
 #include <ctime>
+#include <map>
 #include <memory>
 #include <mutex>
 
 namespace daisykit {
 namespace graphs {
+
+class Packet;
+// Packet pointer
+typedef std::shared_ptr<Packet> PacketPtr;
+/// Packet map - Used for inputs/outputs
+typedef std::map<std::string, PacketPtr> PacketMap;
 
 /// Packet is a data holder, used in DaisyKit graph as the wrapper message for
 /// data transmission between nodes.
@@ -64,19 +71,19 @@ class Packet {
 
   /// Create a packet from pointer.
   template <typename T>
-  static std::shared_ptr<Packet> Adopt(T* ptr) {
+  static PacketPtr Adopt(T* ptr) {
     std::shared_ptr<T> data(ptr);
     utils::TimePoint timestamp = utils::Timer::GetCurrentTime();
-    std::shared_ptr<Packet> packet = std::make_shared<Packet>(
+    PacketPtr packet = std::make_shared<Packet>(
         std::static_pointer_cast<void>(data), timestamp);
     return packet;
   }
 
   /// Make a packet from a shared pointer to the data.
   template <typename T>
-  static std::shared_ptr<Packet> MakePacket(std::shared_ptr<T> data) {
+  static PacketPtr MakePacket(std::shared_ptr<T> data) {
     utils::TimePoint timestamp = utils::Timer::GetCurrentTime();
-    std::shared_ptr<Packet> packet = std::make_shared<Packet>(
+    PacketPtr packet = std::make_shared<Packet>(
         std::static_pointer_cast<void>(data), timestamp);
     return packet;
   }
@@ -86,8 +93,7 @@ class Packet {
   template <typename T,
             typename std::enable_if<!std::is_array<T>::value>::type* = nullptr,
             typename... Args>
-  static std::shared_ptr<Packet> MakePacket(
-      Args&&... args) {  /// NOLINT(build/c++11)
+  static PacketPtr MakePacket(Args&&... args) {  /// NOLINT(build/c++11)
     return Adopt(new T(std::forward<Args>(args)...));
   }
 
@@ -97,8 +103,6 @@ class Packet {
   utils::TimePoint timestamp_;
   std::atomic<bool> data_available_;
 };
-
-typedef std::shared_ptr<Packet> PacketPtr;
 
 }  // namespace graphs
 }  // namespace daisykit

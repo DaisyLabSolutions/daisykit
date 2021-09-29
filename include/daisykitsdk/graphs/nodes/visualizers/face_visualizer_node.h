@@ -40,13 +40,13 @@ class FaceVisualizerNode : public Node {
     with_landmark_ = with_landmark;
   }
 
-  void Process(std::shared_ptr<Packet> in_packet,
-               std::shared_ptr<Packet>& out_packet) {}
+  void Process(PacketPtr in_packet,
+               PacketPtr& out_packet) {}
 
   void Tick() {
     WaitForData();
 
-    std::map<std::string, PacketPtr> inputs;
+    PacketMap inputs;
     PrepareInputs(inputs);
 
     // Get new faces result

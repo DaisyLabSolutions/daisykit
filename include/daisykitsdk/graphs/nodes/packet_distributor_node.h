@@ -36,13 +36,13 @@ class PacketDistributorNode : public Node {
     WaitForData();
 
     // Prepare input packets
-    std::map<std::string, PacketPtr> inputs;
+    PacketMap inputs;
     PrepareInputs(inputs);
 
     // Copy input to output
     PacketPtr input = inputs["input"];
-    std::map<std::string, PacketPtr> outputs;
-    outputs.insert(std::make_pair("output", input));
+    PacketMap outputs;
+    outputs["output"] = input;
     Publish(outputs);
   }
 };

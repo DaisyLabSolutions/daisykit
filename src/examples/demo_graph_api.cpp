@@ -61,7 +61,7 @@ int main(int, char**) {
   while (1) {
     Mat frame;
     cap >> frame;
-    std::shared_ptr<Packet> in_packet = Packet::MakePacket<cv::Mat>(frame);
+    PacketPtr in_packet = Packet::MakePacket<cv::Mat>(frame);
     grayscale_node->Input("input", in_packet);
   }
 

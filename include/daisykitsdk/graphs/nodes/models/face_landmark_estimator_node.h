@@ -48,7 +48,7 @@ class FacialLandmarkEstimatorNode : public Node {
     WaitForData();
 
     // Prepare input packets
-    std::map<std::string, PacketPtr> inputs;
+    PacketMap inputs;
     PrepareInputs(inputs);
 
     // Get faces result
@@ -67,8 +67,9 @@ class FacialLandmarkEstimatorNode : public Node {
     output = std::make_shared<Packet>(std::static_pointer_cast<void>(faces),
                                       timestamp);
 
-    std::map<std::string, PacketPtr> outputs;
-    outputs.insert(std::make_pair("output", output));
+    PacketMap outputs;
+    outputs["output"] = output;
+
     Publish(outputs);
   }
 

@@ -81,10 +81,10 @@ class Node {
 
  protected:
   /// Prepare all needed input as a map for processing function.
-  void PrepareInputs(std::map<std::string, PacketPtr>& input_map);
+  void PrepareInputs(PacketMap& input_map);
 
   /// Publish outputs to output connections.
-  void Publish(const std::map<std::string, PacketPtr>& outputs);
+  void Publish(const PacketMap& outputs);
 
  private:
   /// Worker thread for each node.
